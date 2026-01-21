@@ -1,0 +1,23 @@
+import os
+from pypdf import PdfReader
+
+
+def extract_text_from_pdf(file_path: str) -> str:
+    """Extract text from a PDF file"""
+    reader = PdfReader(file_path)
+    pages = []
+
+    for page in reader.pages:
+        text = page.extract_text()
+        if text:
+            pages.append(text)
+
+    return "\n".join(pages)
+
+
+def clean_text(text: str) -> str:
+    """Basic text cleaning"""
+    text = text.replace("\n", " ")
+    text = text.replace("\t", " ")
+    text = " ".join(text.split())
+    return text
